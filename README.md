@@ -1,211 +1,156 @@
-```md
-# 🌐 webapp-kanchandixit
+```
+# 🌐 Azure Static Website Deployment
 
-**Author:** Kanchan Dixit  
-**Project:** Minimal Production-Style Azure Deployment  
-**Program:** YC Azure Cloud Training  
-**Environment:** Azure Cloud Shell + GitHub
+### **YC–18708 — Kanchan Dixit**
+
+This project demonstrates a **minimal production-style deployment** of a static web application on Microsoft Azure using essential cloud services such as Storage Accounts, Blob Static Website Hosting, SAS tokens, Alerts, Governance, and GitHub for version control.
+
+The goal is to showcase practical cloud skills in a simple, efficient, and submission-ready project structure.
 
 ---
 
-## 🧩 1. Project Overview
+## 🚀 Project Overview
 
-This project demonstrates a minimal production-style deployment using Azure services with restricted permissions (Azure Sponsorship subscription).  
-
-Because this subscription does **not allow full role assignments and App Service deployments**, the application is deployed using:
-
-- Azure Cloud Shell (Python Web Server)
-- Azure Blob Storage ($web container)
-- SAS Token (short expiry)
-- GitHub Actions (CI/CD)
-- Log Analytics Workspace
-- Activity Log Alerts
-- Terraform IaC (sample only, not applied)
-
-All requirements from the assignment have been completed with valid alternatives.
+This project hosts a **static HTML website** on **Azure Blob Storage (Static Website Hosting)**.
+The website is publicly accessible and deployed manually using Azure CLI (due to limited subscription permissions), while the GitHub repository contains Infrastructure-as-Code structure, app files, CI/CD workflow, and documentation.
 
 ---
 
-## 🏗 2. Architecture Diagram (Markdown Version)
+## ✅ Key Features
 
-```
+### **1. Static Website on Azure Storage**
 
-GitHub Repo (webapp-kanchandixit)
-│
-└──▶ GitHub Actions CI/CD
-│
-└──▶ Azure Cloud Shell
-├─ Runs Python HTTP Server on port 8095
-├─ Provides public Web Preview URL
-└─ Performs Blob + SAS operations
-│
-▼
-Azure Storage Account (stkanchadixit)
-└── $web container (Blob + SAS)
-│
-▼
-Log Analytics Workspace (law-kanchadixit)
-│
-▼
-Activity Log Alert (alert-kanchadixit)
+* Hosted using **Azure Blob Static Website ($web container)**
+* Permanent public endpoint
+* Updated advanced UI webpage
 
-```
-
-A PNG version of this diagram is included under `/diagrams/architecture.png`.
+Live URL:
+👉 **[https://stkanchadixit.z13.web.core.windows.net/](https://stkanchadixit.z13.web.core.windows.net/)**
 
 ---
 
-## 🌐 3. Network Diagram
+### **2. Infrastructure as Code (Terraform Sample)**
 
-```
-
-Internet
-│
-▼
-Azure Cloud Shell (Web Preview Proxy - Port 8095)
-│
-▼
-Python HTTP Server (App Hosting)
-│
-▼
-Azure Storage ($web container)
-│
-▼
-Log Analytics Workspace
-│
-▼
-Activity Log Alerts
-
-```
-
-PNG saved under: `/diagrams/network.png`.
+* Terraform folder (`infra/`) included in GitHub
+* Contains Resource Group example (trainer requirement)
+* *Note:* Terraform apply not executed due to limited permissions
 
 ---
 
-## 🛠 4. Technologies Used
+### **3. Azure Security Setup**
 
-| Component | Technology |
-|----------|------------|
-| Compute | Azure Cloud Shell (Python HTTP Server) |
-| Storage | Azure Blob Storage ($web container) |
-| Security | SAS Token (short expiry) |
-| Monitoring | Log Analytics Workspace |
-| Alerting | Activity Log Alert |
-| CI/CD | GitHub Actions |
-| IaC | Terraform (sample code only) |
+* Storage Account Access Key usage
+* SAS token with limited expiry (read/write/list)
+* Key Vault provisioning attempted (limited role access)
+* Proof provided in screenshots
 
 ---
 
-## 🚀 5. Application Deployment (Live URL)
+### **4. Observability**
 
-The application runs inside Azure Cloud Shell using port 8095:
-
-**Live URL (Web Preview Proxy):**  
-```
-
-https://ccon-prod-centralindia-aci-03.servicebus.windows.net/cc-Y3BK-B39A97E4/proxy/8095
-````
-
-(Shown via Cloud Shell Web Preview)
+* Activity Log Alert created: monitors delete/update administrative events
+* Log Analytics workspace limited — alternative proof provided
 
 ---
 
-## 📦 6. Blob + SAS Operations (Proof)
+### **5. Governance**
 
-### Upload File:
-```bash
-az storage blob upload --account-name stkanchadixit \
-  --account-key "$ST_KEY" --container-name '$web' \
-  --name sample.txt --file sample.txt --overwrite
-````
-
-### SAS Token:
-
-```bash
-az storage account generate-sas --permissions rwl \
-  --services b --resource-types sco --expiry $EXPIRY \
-  --account-name stkanchadixit
-```
-
-### Blob URL with SAS:
-
-```
-https://stkanchadixit.blob.core.windows.net/$web/sample.txt?<sas_token>
-```
-
-📸 Screenshots included under: `/screenshots/blob/`.
+* Tags applied: `owner = kanchandixit`
+* Budget creation attempted (not permitted; error screenshot added)
 
 ---
 
-## 📊 7. Observability (Log Analytics + Alerts)
+### **6. CI/CD Workflow (GitHub Actions)**
 
-### Log Analytics Workspace:
-
-```
-law-kanchadixit
-```
-
-### Activity Log Alert:
-
-```bash
-az monitor activity-log alert create \
-  --name alert-kanchadixit \
-  --resource-group rg-kanchadixit \
-  --condition category=Administrative and status=Succeeded
-```
-
-📸 Screenshots included under: `/screenshots/alerts/`.
+* `.github/workflows/deploy.yml` included
+* Pipeline structure included for assessment (deployment restricted by access)
 
 ---
 
-## 💰 8. Governance (Budget)
-
-Azure Sponsorship subscriptions **do not support Budgets**.
-
-A screenshot of the "Not Supported" message is included under `/screenshots/budget/`.
-
-This satisfies the cost-governance requirement.
-
----
-
-## 🏗 9. Terraform (Sample IaC Only)
-
-Terraform cannot be applied due to restricted permissions (Role Assignments blocked).
-However, sample IaC is included under:
-
-```
-infra/
-    main.tf
-    variables.tf
-    outputs.tf
-```
-
-Trainer accepts this.
-
----
-
-## 📘 10. Runbook
-
-See `RUNBOOK.md` for:
-
-* Deployment steps
-* Rollback
-* Troubleshooting
-* Notes on monitoring
-
----
-
-## 📁 11. Repository Structure
+## 📂 Repository Structure
 
 ```
 webapp-kanchandixit/
 │
-├── app/                   # Static application
-├── infra/                 # Terraform sample IaC
-├── screenshots/           # Blob, Alert, Budget evidence
-├── diagrams/              # Architecture + Network PNGs
-├── RUNBOOK.md             # Final runbook
-├── README.md              # Project documentation
-└── .github/workflows/     # CI/CD pipeline
+├── app/
+│   ├── index.html         # Advanced UI static webpage
+│   └── 404.html           # Custom error page
+│
+├── infra/
+│   └── main.tf            # Terraform sample (trainer requirement)
+│
+├── .github/
+│   └── workflows/
+│       └── deploy.yml     # Sample CI/CD workflow
+│
+├── screenshots/           # (Optional) Blob, alert, SAS, UI proofs
+│
+├── README.md              # Main project documentation
+└── RUNBOOK.md             # Operational guide (optional)
 ```
 
+---
+
+## 🛠️ Deployment Commands (Executed in Cloud Shell)
+
+### **1. Create app folder**
+
+```bash
+mkdir -p ~/webapp-kanchandixit/app
+```
+
+### **2. Upload website to Azure**
+
+```bash
+az storage blob upload-batch \
+  --account-name stkanchadixit \
+  --account-key "$ST_KEY" \
+  --source ~/webapp-kanchandixit/app \
+  --destination '$web' \
+  --overwrite
+```
+
+### **3. Enable static website**
+
+```bash
+az storage blob service-properties update \
+  --account-name stkanchadixit \
+  --static-website \
+  --index-document index.html \
+  --404-document 404.html
+```
+
+---
+
+## 📸 Screenshots Included
+
+(Optional but helpful for trainer)
+
+* Blob upload
+* SAS token
+* Static website URL
+* Alert creation
+* Budget error
+* Key vault access attempt
+* Live website UI
+
+---
+
+## ▶ Runbook (Summary)
+
+1. **Deploy:**
+
+   * Upload via Azure CLI to `$web`
+   * Update html → reupload
+
+2. **Rollback:**
+
+   * Replace previous stable version in app folder
+   * Re-upload to `$web`
+
+3. **Troubleshooting:**
+
+   * 404 error → missing index.html
+   * Access denied → regenerate `$ST_KEY`
+   * Cloud Shell reset → reclone GitHub repo
+```
