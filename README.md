@@ -113,8 +113,7 @@ The app runs from Cloud Shell:
 
 LIVE URL:
 
-https://ccon-prod-centralindia-aci-03.servicebus.windows.net/<proxy>/proxy/8095/
-
+https://ccon-prod-centralindia-aci-03.servicebus.windows.net/cc-Y3BK-B39A97E4/proxy/8095
 
 (Displayed via Web Preview)
 
