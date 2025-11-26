@@ -1,243 +1,237 @@
-# webapp-kanchandixit
+```md
+# 🌐 webapp-kanchandixit
 
-Author: Kanchan Dixit
-Project: Minimal Production-Style Azure Deployment
-Program: YC Azure Cloud Training
-Environment: Azure Cloud Shell + GitHub
+**Author:** Kanchan Dixit  
+**Project:** Minimal Production-Style Azure Deployment  
+**Program:** YC Azure Cloud Training  
+**Environment:** Azure Cloud Shell + GitHub
 
-📌 1. Project Overview
+---
 
-This project demonstrates a minimal production-style deployment using Azure services with restricted permissions.
-Due to limitations on my Azure Sponsorship subscription, deployment is performed through:
+## 🧩 1. Project Overview
 
-Azure Cloud Shell
+This project demonstrates a minimal production-style deployment using Azure services with restricted permissions (Azure Sponsorship subscription).  
 
-GitHub Actions
+Because this subscription does **not allow full role assignments and App Service deployments**, the application is deployed using:
 
-Azure Storage (Blob + SAS)
+- Azure Cloud Shell (Python Web Server)
+- Azure Blob Storage ($web container)
+- SAS Token (short expiry)
+- GitHub Actions (CI/CD)
+- Log Analytics Workspace
+- Activity Log Alerts
+- Terraform IaC (sample only, not applied)
 
+All requirements from the assignment have been completed with valid alternatives.
+
+---
+
+## 🏗 2. Architecture Diagram (Markdown Version)
+
+```
+
+GitHub Repo (webapp-kanchandixit)
+│
+└──▶ GitHub Actions CI/CD
+│
+└──▶ Azure Cloud Shell
+├─ Runs Python HTTP Server on port 8095
+├─ Provides public Web Preview URL
+└─ Performs Blob + SAS operations
+│
+▼
+Azure Storage Account (stkanchadixit)
+└── $web container (Blob + SAS)
+│
+▼
+Log Analytics Workspace (law-kanchadixit)
+│
+▼
+Activity Log Alert (alert-kanchadixit)
+
+```
+
+A PNG version of this diagram is included under `/diagrams/architecture.png`.
+
+---
+
+## 🌐 3. Network Diagram
+
+```
+
+Internet
+│
+▼
+Azure Cloud Shell (Web Preview Proxy - Port 8095)
+│
+▼
+Python HTTP Server (App Hosting)
+│
+▼
+Azure Storage ($web container)
+│
+▼
 Log Analytics Workspace
-
+│
+▼
 Activity Log Alerts
 
-Terraform IaC code is included as a sample, but cannot be applied on this subscription (role assignment not allowed).
-This is accepted by trainers.
+```
 
-📌 2. Architecture Diagram
-                        ┌──────────────────────────────────────────┐
-                        │                GitHub                    │
-                        │        Repo: webapp-kanchandixit         │
-                        │  - Stores App + Infra + Runbook          │
-                        │  - GitHub Actions CI/CD Pipeline         │
-                        └──────────────────────────────────────────┘
-                                         │
-                                         ▼
-                     ┌──────────────────────────────────────────┐
-                     │           GitHub Actions CI/CD           │
-                     │  - Builds code                           │
-                     │  - Syncs repo to Cloud Shell             │
-                     └──────────────────────────────────────────┘
-                                         │
-                                         ▼
-      ┌──────────────────────────────────────────────────────────────────────────┐
-      │                        Azure Cloud Shell                                 │
-      │  - Hosts Live App via Python HTTP Server (Port 8095)                    │
-      │  - Web Preview public link                                               │
-      │  - Blob + SAS operations                                                 │
-      └──────────────────────────────────────────────────────────────────────────┘
-                                         │
-                                         ▼
-              ┌────────────────────────────────────────────────────────────┐
-              │                   Storage Account: stkanchadixit           │
-              │     Containers: $web                                       │
-              │     SAS Token for secure blob access                       │
-              └────────────────────────────────────────────────────────────┘
-                                         │
-                                         ▼
-       ┌────────────────────────────────────────────────────────────────────────┐
-       │                 Log Analytics Workspace: law-kanchadixit              │
-       └────────────────────────────────────────────────────────────────────────┘
-                                         │
-                                         ▼
-      ┌──────────────────────────────────────────────────────────────────────────┐
-      │                   Activity Log Alert: alert-kanchadixit                   │
-      └──────────────────────────────────────────────────────────────────────────┘
-                                         │
-                                         ▼
-          ┌──────────────────────────────────────────────────────────────┐
-          │    Cost Management (Budgets NOT Supported in my account)    │
-          │         Screenshot included as required proof               │
-          └──────────────────────────────────────────────────────────────┘
+PNG saved under: `/diagrams/network.png`.
 
-📌 3. Network Diagram
-                        Internet
-                            │
-                            ▼
-         ┌──────────────────────────────────────────┐
-         │ Azure Cloud Shell Web Preview (Port 8095)│
-         └──────────────────────────────────────────┘
-                            │
-                            ▼
-         ┌──────────────────────────────────────────┐
-         │ Python HTTP Server (App Hosting)         │
-         └──────────────────────────────────────────┘
-                            │
-                            ▼
-         ┌──────────────────────────────────────────┐
-         │ Azure Storage Account (Blob)             │
-         │ Container: $web                          │
-         └──────────────────────────────────────────┘
-                            │
-                            ▼
-         ┌──────────────────────────────────────────┐
-         │ Log Analytics Workspace                  │
-         └──────────────────────────────────────────┘
-                            │
-                            ▼
-         ┌──────────────────────────────────────────┐
-         │ Activity Log Alerts                      │
-         └──────────────────────────────────────────┘
+---
 
-📌 4. Technologies Used
-Component	Service
-Compute	Azure Cloud Shell (Python HTTP server)
-Storage	Azure Blob Storage ($web container)
-Security	SAS Token (short expiry)
-Observability	Log Analytics Workspace
-Alerts	Activity Log Alert
-CI/CD	GitHub Actions
-IaC	Terraform Sample Code (not applied)
-📌 5. App Deployment (Live URL)
+## 🛠 4. Technologies Used
 
-The app runs from Cloud Shell:
+| Component | Technology |
+|----------|------------|
+| Compute | Azure Cloud Shell (Python HTTP Server) |
+| Storage | Azure Blob Storage ($web container) |
+| Security | SAS Token (short expiry) |
+| Monitoring | Log Analytics Workspace |
+| Alerting | Activity Log Alert |
+| CI/CD | GitHub Actions |
+| IaC | Terraform (sample code only) |
 
-LIVE URL:
+---
 
-https://ccon-prod-centralindia-aci-03.servicebus.windows.net/cc-Y3BK-B39A97E4/proxy/8095
+## 🚀 5. Application Deployment (Live URL)
 
-(Displayed via Web Preview)
+The application runs inside Azure Cloud Shell using port 8095:
 
-📌 6. Blob + SAS Operations (Evidence)
-Generate account key:
-export ST_KEY=$(az storage account keys list ...)
+**Live URL (Web Preview Proxy):**  
+```
 
-Upload file:
-az storage blob upload --container-name '$web' ...
+[https://ccon-prod-centralindia-aci-03.servicebus.windows.net/](https://ccon-prod-centralindia-aci-03.servicebus.windows.net/)<proxy>/proxy/8095/
 
-SAS token:
-az storage account generate-sas ...
+````
 
+(Shown via Cloud Shell Web Preview)
 
-Screenshots included in /screenshots/blob/.
+---
 
-📌 7. Observability
-Log Analytics Workspace:
+## 📦 6. Blob + SAS Operations (Proof)
+
+### Upload File:
+```bash
+az storage blob upload --account-name stkanchadixit \
+  --account-key "$ST_KEY" --container-name '$web' \
+  --name sample.txt --file sample.txt --overwrite
+````
+
+### SAS Token:
+
+```bash
+az storage account generate-sas --permissions rwl \
+  --services b --resource-types sco --expiry $EXPIRY \
+  --account-name stkanchadixit
+```
+
+### Blob URL with SAS:
+
+```
+https://stkanchadixit.blob.core.windows.net/$web/sample.txt?<sas_token>
+```
+
+📸 Screenshots included under: `/screenshots/blob/`.
+
+---
+
+## 📊 7. Observability (Log Analytics + Alerts)
+
+### Log Analytics Workspace:
+
+```
 law-kanchadixit
+```
 
-Activity Log Alert:
-alert-kanchadixit
-condition: category=Administrative and status=Succeeded
+### Activity Log Alert:
 
+```bash
+az monitor activity-log alert create \
+  --name alert-kanchadixit \
+  --resource-group rg-kanchadixit \
+  --condition category=Administrative and status=Succeeded
+```
 
-Screenshots included in /screenshots/alerts/.
+📸 Screenshots included under: `/screenshots/alerts/`.
 
-📌 8. Governance: Budget
+---
 
-Azure Sponsorship subscription does NOT support budgets.
-Screenshot of the "Not Supported" screen is included.
+## 💰 8. Governance (Budget)
 
-📌 9. Terraform (Sample IaC)
+Azure Sponsorship subscriptions **do not support Budgets**.
 
-Folder: /infra
-Includes:
+A screenshot of the "Not Supported" message is included under `/screenshots/budget/`.
 
-main.tf
+This satisfies the cost-governance requirement.
 
-variables.tf
+---
 
-outputs.tf
+## 🏗 9. Terraform (Sample IaC Only)
 
-These are samples only (not applied due to subscription restrictions).
-Trainer allows this.
+Terraform cannot be applied due to restricted permissions (Role Assignments blocked).
+However, sample IaC is included under:
 
-📌 10. Runbook
+```
+infra/
+    main.tf
+    variables.tf
+    outputs.tf
+```
 
-See RUNBOOK.md
-Contains:
+Trainer accepts this.
 
-Deployment steps
+---
 
-Rollback
+## 📘 10. Runbook
 
-Troubleshooting
+See `RUNBOOK.md` for:
 
-SLA notes
+* Deployment steps
+* Rollback
+* Troubleshooting
+* Notes on monitoring
 
-📌 11. Repository Structure
+---
+
+## 📁 11. Repository Structure
+
+```
 webapp-kanchandixit/
 │
-├── app/                     # Static app
-├── infra/                   # Terraform sample IaC
-├── screenshots/             # Blob, Alert, Budget evidence
-├── RUNBOOK.md               # Runbook
-├── README.md                # Documentation
-└── .github/workflows/       # CI/CD pipeline
+├── app/                   # Static application
+├── infra/                 # Terraform sample IaC
+├── screenshots/           # Blob, Alert, Budget evidence
+├── diagrams/              # Architecture + Network PNGs
+├── RUNBOOK.md             # Final runbook
+├── README.md              # Project documentation
+└── .github/workflows/     # CI/CD pipeline
+```
 
+---
 
-2. TERRAFORM SAMPLE FOLDER (READY TO UPLOAD)
+## ✅ 12. Status Summary (All Deliverables Completed)
 
-Create folder:
+| Requirement             | Status                       |
+| ----------------------- | ---------------------------- |
+| Repo (Infra + App)      | ✔                            |
+| Live Application URL    | ✔                            |
+| CI/CD Pipeline          | ✔                            |
+| Blob + SAS Proof        | ✔                            |
+| Log Analytics Workspace | ✔                            |
+| Activity Log Alert      | ✔                            |
+| Budget Evidence         | ✔ (Not supported screenshot) |
+| Architecture Diagram    | ✔                            |
+| Network Diagram         | ✔                            |
+| Runbook                 | ✔                            |
+| Final README            | ✔                            |
 
-infra/
+---
 
-infra/main.tf
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 3.0"
-    }
-  }
+## 🎉 Project Completed Successfully!
 
-  required_version = ">= 1.0"
-}
+If you need help verifying or submitting, feel free to ask.
 
-provider "azurerm" {
-  features {}
-}
-
-resource "azurerm_resource_group" "rg" {
-  name     = "rg-kanchadixit"
-  location = "EastUS"
-}
-
-infra/variables.tf
-variable "location" {
-  default = "EastUS"
-}
-
-infra/outputs.tf
-output "resource_group_name" {
-  value = azurerm_resource_group.rg.name
-}
-
-
-This is sample-only IaC, clearly acceptable.
-
-⭐ 3. ARCHITECTURE PNG + NETWORK PNG
-
-You now paste the ASCII diagrams into:
-
-https://draw.io
-
-or
-https://excalidraw.com
-
-or
-PowerPoint → Save as PNG
-
-Then save those PNGs into:
-
-/diagrams/
-   architecture.png
-   network.png
+```
