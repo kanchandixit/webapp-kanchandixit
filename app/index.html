@@ -1,2 +1,188 @@
-<h1>Hello from Kanchan Dixit!</h1>
-<p>This is the Cloud Shell served mini project app.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YC-18708 | Kanchan Dixit</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0;
+        }
+
+        header {
+            width: 100%;
+            padding: 25px;
+            text-align: center;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 34px;
+            font-weight: 600;
+        }
+
+        header p {
+            margin: 5px 0 0;
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 950px;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 18px;
+            padding: 30px;
+            margin: 25px 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+            backdrop-filter: blur(12px);
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 28px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            font-size: 30px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .highlight {
+            font-weight: 600;
+            color: #ffe47a;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 25px;
+            background: #ffe47a;
+            color: #1a1a1a;
+            font-weight: bold;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #ffdd55;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            margin: 40px 0 20px;
+            font-size: 14px;
+            opacity: 0.7;
+            text-align: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <h1>Welcome to YC-18708</h1>
+        <p>Azure Cloud Mini Project by <span class="highlight">Kanchan Dixit</span></p>
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+
+        <!-- Card 1 -->
+        <div class="card">
+            <h2><span class="icon">🚀</span> Project Overview</h2>
+            <p>
+                This is a fully hosted <span class="highlight">static website</span> deployed on 
+                <span class="highlight">Azure Blob Storage Static Website Hosting</span>.
+            </p>
+            <p>
+                It demonstrates Azure Storage, CI/CD, Infrastructure-as-Code and Cloud fundamentals.
+            </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card">
+            <h2><span class="icon">📦</span> Storage Account</h2>
+            <p>
+                Your static website is hosted in the storage account:
+            </p>
+            <p class="highlight">stkanchadixit</p>
+
+            <a class="btn" href="#" onclick="alert('This is static hosting—backend not required!');">
+                Learn More
+            </a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card">
+            <h2><span class="icon">🌐</span> Live Website URL</h2>
+            <p>
+                Access your live Azure-hosted static site anytime using:
+            </p>
+            <p class="highlight">https://stkanchadixit.z13.web.core.windows.net/</p>
+
+            <a class="btn" href="https://stkanchadixit.z13.web.core.windows.net/" target="_blank">
+                Open Website
+            </a>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card">
+            <h2><span class="icon">⚙️</span> Technologies Used</h2>
+            <p>
+                ✔ Azure Storage  
+                ✔ Azure CLI  
+                ✔ Static Website Hosting  
+                ✔ GitHub Actions  
+                ✔ Terraform (IaC)  
+                ✔ Azure Monitoring  
+            </p>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2025 | Made by Kanchan Dixit | Azure Cloud Mini Project YC-18708
+    </footer>
+
+</body>
+</html>
