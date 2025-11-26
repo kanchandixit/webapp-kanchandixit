@@ -1,0 +1,16 @@
+name: CI - App Files
+
+on:
+  push:
+    branches: 
+      - main
+
+jobs:
+  build-and-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: List repository contents
+        run: ls -R .
