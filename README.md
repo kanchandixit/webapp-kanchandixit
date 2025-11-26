@@ -103,8 +103,7 @@ The application runs inside Azure Cloud Shell using port 8095:
 **Live URL (Web Preview Proxy):**  
 ```
 
-[https://ccon-prod-centralindia-aci-03.servicebus.windows.net/](https://ccon-prod-centralindia-aci-03.servicebus.windows.net/)<proxy>/proxy/8095/
-
+https://ccon-prod-centralindia-aci-03.servicebus.windows.net/cc-Y3BK-B39A97E4/proxy/8095
 ````
 
 (Shown via Cloud Shell Web Preview)
