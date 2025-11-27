@@ -25,7 +25,7 @@ The website is publicly accessible and deployed manually using Azure CLI (due to
 * Updated advanced UI webpage
 
 Live URL:
-👉 **[https://stkanchadixit.z13.web.core.windows.net/](https://stkanchadixit.z13.web.core.windows.net/)**
+👉 https://stkanchadixit.z13.web.core.windows.net/
 
 ---
 
